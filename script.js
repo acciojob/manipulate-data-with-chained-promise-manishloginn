@@ -1,31 +1,32 @@
-//your JS code here. If required.
 const outputInput = document.getElementById("output")
 
 let array = [1, 2, 3, 4];
 
-let p1 = new Promise((res, rej) => {
-    let delay = 3000;
-    let evenNumber =array.filter((itera) => itera % 2 == 0 )
-    if (evenNumber) {
-        setTimeout(() => {
-            let multiply = evenNumber.map((e)=> e * 2 )
-            console.log(multiply)
+function newManipulation(array) {
+    return new Promise((res, rej) => {
+        setTimeout(()=> {
+            res (array)
+        } , 3000)
+    }).then(array => {
+        return new Promise ((res, rej) => {
             setTimeout(() => {
-                res (multiply)
-            }, delay + 2000 )
-        }, delay);
-    } else {
-        setTimeout(() => {
-            rej ("not solved")
-        })
-    }
-})
+                const evenNumber =array.filter((num) => num % 2 == 0 )
+                outputInput.innerText= evenNumber.join(' ')
+                res (evenNumber);
 
-p1.then((data) => {
-    setTimeout(() => {
-        outputInput.innerText= data
-    }, 1000)
-    
-}).catch((err)=> {
-    console.log(err)
-})
+            }, 1000);
+        })
+    }).then(evenNumber => {
+        return new Promise ((res, rej)=> {
+            setTimeout(()=> {
+                const evenMulti = evenNumber.map((multi) => multi *2)
+                outputInput.innerText= evenMulti.join(' ')
+                res(evenMulti);
+
+            }, 2000)
+        })
+    })
+}
+
+newManipulation(array)
+
